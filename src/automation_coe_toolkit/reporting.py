@@ -11,6 +11,7 @@ def render_markdown(evaluation: PortfolioEvaluation) -> str:
         f"- Intake: `{intake.intake_id}`",
         f"- Sponsor: {_safe(intake.sponsor)}",
         f"- Process owner: {_safe(intake.process_owner)}",
+        f"- Assessment model: `{assessment.model_version}`",
         f"- Recommendation: **{assessment.decision.value}**",
         "",
         "## Scorecard",
@@ -27,10 +28,19 @@ def render_markdown(evaluation: PortfolioEvaluation) -> str:
         "## Financial model",
         "",
         f"- Annual hours saved: {roi.annual_hours_saved}",
-        f"- Annual gross benefit: {roi.annual_gross_benefit}",
-        f"- Risk-adjusted implementation cost: {roi.risk_adjusted_implementation_cost}",
-        f"- Year-one total cost: {roi.year_one_total_cost}",
-        f"- Year-one net benefit: {roi.year_one_net_benefit}",
+        (
+            f"- Annual gross benefit: {roi.annual_gross_benefit} "
+            f"{intake.financial.currency}"
+        ),
+        (
+            "- Risk-adjusted implementation cost: "
+            f"{roi.risk_adjusted_implementation_cost} {intake.financial.currency}"
+        ),
+        f"- Year-one total cost: {roi.year_one_total_cost} {intake.financial.currency}",
+        (
+            f"- Year-one net benefit: {roi.year_one_net_benefit} "
+            f"{intake.financial.currency}"
+        ),
         f"- Payback months: {_optional(roi.payback_months)}",
         f"- Three-year ROI percent: {_optional(roi.three_year_roi_percent)}",
         "",

@@ -2,8 +2,8 @@
 
 ## Purpose
 
-The model creates a consistent first-pass comparison across proposed automations. It is not a
-precision forecast. Discovery must validate every baseline and financial input.
+The versioned model creates a consistent first-pass comparison across proposed automations. It is
+not a precision forecast. Discovery must validate every baseline and financial input.
 
 ## Value score
 
@@ -95,7 +95,7 @@ return no ratio instead of misleading infinity.
 ## Model governance
 
 - Store intake and evaluation together.
-- Record the model version used for portfolio decisions.
+- Retain the input schema and model version with every portfolio decision.
 - Re-score when assumptions or scope change.
 - Compare forecasts with realized outcomes after release.
 - Investigate systematic optimism by process type.

@@ -9,6 +9,7 @@ that the model has run an enterprise portfolio or delivered claimed commercial o
 ## What survives scrutiny
 
 - Intake values are typed, bounded, and reject unknown fields.
+- Input schema and assessment model versions are explicit in the evaluation record.
 - Score components, weights, thresholds, rationales, and decision order are visible.
 - Weak evidence and elevated risk cannot be averaged away by value.
 - Financial outputs disclose that they inherit assumptions.

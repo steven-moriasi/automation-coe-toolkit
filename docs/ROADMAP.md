@@ -2,7 +2,7 @@
 
 ## Priority 1: Model governance
 
-- Add explicit model versions to inputs and outputs.
+- Add model-version migration, dual-running, and historical re-scoring workflows.
 - Store calibration datasets without sensitive process data.
 - Add sensitivity analysis and confidence ranges.
 - Compare forecast with realized outcomes by automation type.

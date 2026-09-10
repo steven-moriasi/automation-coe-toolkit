@@ -1,4 +1,5 @@
 {
+  "schema_version": "1.0",
   "intake_id": "AUT-1001",
   "name": "Quarterly access evidence preparation",
   "sponsor": "Risk Operations",
@@ -25,6 +26,7 @@
     "customer_facing": false
   },
   "financial": {
+    "currency": "USD",
     "implementation_cost": "48000",
     "annual_platform_cost": "12000",
     "expected_automation_percent": "75",

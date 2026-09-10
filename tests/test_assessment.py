@@ -19,6 +19,7 @@ def test_assessment_scores_value_feasibility_risk_and_roi(
     result = assess(sample_intake)
 
     assert result.decision is AssessmentDecision.CANDIDATE
+    assert result.model_version == "1.0.0"
     assert result.value_score == Decimal("76.0")
     assert result.feasibility_score == Decimal("87.9")
     assert result.risk_score == Decimal("55.0")
@@ -71,6 +72,7 @@ def test_elevated_risk_requires_risk_review(
 
 def test_low_value_complex_process_is_not_recommended() -> None:
     intake = AutomationIntake(
+        schema_version="1.0",
         intake_id="AUT-9001",
         name="Low-value exception handling",
         sponsor="Example Operations",
@@ -101,6 +103,7 @@ def test_low_value_complex_process_is_not_recommended() -> None:
             customer_facing=False,
         ),
         financial=FinancialAssumptions(
+            currency="USD",
             implementation_cost=Decimal(100_000),
             annual_platform_cost=Decimal(10_000),
             expected_automation_percent=Decimal(10),

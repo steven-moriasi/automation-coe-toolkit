@@ -11,6 +11,7 @@ from automation_coe_toolkit.models import (
 from automation_coe_toolkit.roi import calculate_roi
 
 SCORE = Decimal("0.1")
+ASSESSMENT_MODEL_VERSION = "1.0.0"
 
 
 def assess(intake: AutomationIntake) -> AssessmentResult:
@@ -28,6 +29,7 @@ def assess(intake: AutomationIntake) -> AssessmentResult:
     roi = calculate_roi(intake)
 
     return AssessmentResult(
+        model_version=ASSESSMENT_MODEL_VERSION,
         intake_id=intake.intake_id,
         value_score=value_score,
         feasibility_score=feasibility_score,

@@ -1,5 +1,6 @@
 from decimal import Decimal
 from enum import StrEnum
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -56,6 +57,7 @@ class ProcessCharacteristics(StrictModel):
 
 
 class FinancialAssumptions(StrictModel):
+    currency: str = Field(pattern=r"^[A-Z]{3}$")
     implementation_cost: Decimal = Field(ge=0, le=100_000_000)
     annual_platform_cost: Decimal = Field(ge=0, le=100_000_000)
     expected_automation_percent: Decimal = Field(gt=0, le=100)
@@ -72,6 +74,7 @@ class ProcessEvidence(StrictModel):
 
 
 class AutomationIntake(StrictModel):
+    schema_version: Literal["1.0"]
     intake_id: str = Field(pattern=r"^AUT-[0-9]{4,}$")
     name: str = Field(min_length=3, max_length=160)
     sponsor: str = Field(min_length=3, max_length=160)
@@ -103,6 +106,7 @@ class RoiEstimate(StrictModel):
 
 
 class AssessmentResult(StrictModel):
+    model_version: str
     intake_id: str
     value_score: Decimal
     feasibility_score: Decimal
