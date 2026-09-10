@@ -1,0 +1,58 @@
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "automation-coe-toolkit"
+version = "0.1.0"
+description = "Executable governance toolkit for enterprise automation portfolios"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11,<3.14"
+authors = [{ name = "Steven Ongati", email = "ongatisteven@gmail.com" }]
+dependencies = [
+  "pydantic==2.13.5",
+]
+
+[project.optional-dependencies]
+dev = [
+  "mypy==1.16.0",
+  "pip-audit==2.9.0",
+  "pytest==9.1.1",
+  "pytest-cov==6.1.1",
+  "ruff==0.11.13",
+]
+
+[project.scripts]
+coe-toolkit = "automation_coe_toolkit.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/automation_coe_toolkit"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.coverage.run]
+branch = true
+source = ["automation_coe_toolkit"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["src", "tests"]
+plugins = ["pydantic.mypy"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 88
+
+[tool.ruff.lint]
+select = ["ASYNC", "B", "E", "F", "I", "RUF", "S", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S101", "S105", "S106"]
