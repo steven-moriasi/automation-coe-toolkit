@@ -68,9 +68,10 @@ def run_access_review(
 
     decisions = [_decide(request, as_of=as_of) for request in requests]
     audit_events = _audit(decisions)
-    plan_digest = hashlib.sha256(
-        "".join(event.event_hash for event in audit_events).encode()
-    ).hexdigest()
+    plan_material = f"{as_of.isoformat()}|{''.join(
+        event.event_hash for event in audit_events
+    )}"
+    plan_digest = hashlib.sha256(plan_material.encode()).hexdigest()
     return AccessReviewPlan(
         plan_id=f"ARP-{plan_digest[:12]}",
         as_of=as_of,

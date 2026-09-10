@@ -1,5 +1,8 @@
 from decimal import Decimal
 
+import pytest
+from pydantic import ValidationError
+
 from automation_coe_toolkit.models import (
     AssessmentDecision,
     AutomationIntake,
@@ -143,3 +146,23 @@ def test_zero_cost_roi_avoids_division_by_zero(
 
     assert roi.payback_months == Decimal("0.0")
     assert roi.three_year_roi_percent is None
+
+
+def test_intake_rejects_unknown_fields(
+    sample_intake: AutomationIntake,
+) -> None:
+    payload = sample_intake.model_dump(mode="json")
+    payload["unreviewed_override"] = True
+
+    with pytest.raises(ValidationError, match="Extra inputs are not permitted"):
+        AutomationIntake.model_validate(payload)
+
+
+def test_intake_rejects_unknown_schema_version(
+    sample_intake: AutomationIntake,
+) -> None:
+    payload = sample_intake.model_dump(mode="json")
+    payload["schema_version"] = "2.0"
+
+    with pytest.raises(ValidationError, match="Input should be '1.0'"):
+        AutomationIntake.model_validate(payload)

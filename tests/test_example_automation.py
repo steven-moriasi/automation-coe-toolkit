@@ -30,7 +30,7 @@ def test_reference_automation_builds_side_effect_free_auditable_plan() -> None:
         event.previous_hash == plan.audit_events[index - 1].event_hash
         for index, event in enumerate(plan.audit_events[1:], start=1)
     )
-    assert plan.plan_id == "ARP-4bc59e30be82"
+    assert plan.plan_id == "ARP-8e3d00a2dd4d"
 
 
 def test_reference_automation_is_deterministic() -> None:
@@ -40,6 +40,16 @@ def test_reference_automation_is_deterministic() -> None:
     second = run_access_review([request], as_of=date(2026, 9, 1))
 
     assert first == second
+
+
+def test_plan_identity_includes_effective_date() -> None:
+    request = _request()
+
+    first = run_access_review([request], as_of=date(2026, 9, 1))
+    second = run_access_review([request], as_of=date(2026, 9, 2))
+
+    assert first.decisions == second.decisions
+    assert first.plan_id != second.plan_id
 
 
 def test_duplicate_request_ids_are_rejected() -> None:
