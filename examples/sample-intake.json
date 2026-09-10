@@ -1,0 +1,45 @@
+{
+  "intake_id": "AUT-1001",
+  "name": "Quarterly access evidence preparation",
+  "sponsor": "Risk Operations",
+  "process_owner": "Identity Governance",
+  "problem_statement": "Quarterly access evidence is assembled manually from several approved source systems, creating avoidable handling time and reconciliation errors.",
+  "desired_outcome": "Produce a review-ready evidence package with traceable source references while preserving human approval for access decisions.",
+  "metrics": {
+    "monthly_volume": 1800,
+    "average_handling_minutes": "30",
+    "manual_hourly_cost": "42",
+    "error_rate_percent": "12",
+    "sla_hours": "24"
+  },
+  "characteristics": {
+    "rules_stability": 5,
+    "input_structure": 5,
+    "process_standardization": 4,
+    "human_judgment": 2,
+    "exception_rate_percent": "8",
+    "systems_count": 3,
+    "data_sensitivity": "confidential",
+    "privileged_access": false,
+    "regulatory_impact": true,
+    "customer_facing": false
+  },
+  "financial": {
+    "implementation_cost": "48000",
+    "annual_platform_cost": "12000",
+    "expected_automation_percent": "75",
+    "risk_contingency_percent": "20"
+  },
+  "evidence": {
+    "process_owner_confirmed": true,
+    "current_process_documented": true,
+    "baseline_measured": true,
+    "sample_data_available": true,
+    "security_owner_identified": true,
+    "rollback_defined": true
+  },
+  "tags": [
+    "access-governance",
+    "evidence-preparation"
+  ]
+}

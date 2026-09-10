@@ -1,0 +1,34 @@
+[
+  {
+    "request_id": "ARQ-1001",
+    "subject_ref": "subject-1001",
+    "employment_active": true,
+    "access_tier": "standard",
+    "last_login_date": "2026-08-15",
+    "manager_attested": true
+  },
+  {
+    "request_id": "ARQ-1002",
+    "subject_ref": "subject-1002",
+    "employment_active": false,
+    "access_tier": "standard",
+    "last_login_date": "2026-08-20",
+    "manager_attested": false
+  },
+  {
+    "request_id": "ARQ-1003",
+    "subject_ref": "subject-1003",
+    "employment_active": true,
+    "access_tier": "privileged",
+    "last_login_date": "2026-08-25",
+    "manager_attested": true
+  },
+  {
+    "request_id": "ARQ-1004",
+    "subject_ref": "subject-1004",
+    "employment_active": true,
+    "access_tier": "standard",
+    "last_login_date": "2025-01-01",
+    "manager_attested": true
+  }
+]
