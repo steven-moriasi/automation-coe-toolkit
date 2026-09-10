@@ -15,8 +15,8 @@ high-risk automations behind explicit review gates.
 - evidence, security, privacy, and continuity gates;
 - context-specific control recommendations;
 - Markdown and JSON decision reports;
-- a side-effect-free access review reference automation with deterministic decisions and
-  hash-chained audit records;
+- a side-effect-free access review reference automation with bounded inputs, deterministic
+  decisions, and verifiable hash-chained audit records;
 - standards, checklists, templates, tests, container packaging, and CI.
 
 ## Quick start
@@ -69,8 +69,9 @@ It demonstrates:
 - explicit retain, revoke, and manual-review outcomes;
 - human review for privilege, ambiguity, stale data, and missing attestation;
 - duplicate request rejection;
+- bounded batch and input-file sizes;
 - deterministic output;
-- tamper-evident hash chaining;
+- locally verifiable hash chaining;
 - a visible `side_effects_executed: false` safety boundary.
 
 Production execution would require an approved identity connector, durable idempotency,

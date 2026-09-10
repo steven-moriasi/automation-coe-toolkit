@@ -8,6 +8,9 @@ from pydantic import Field, RootModel
 
 from automation_coe_toolkit.models import StrictModel
 
+MAX_ACCESS_REVIEW_FILE_BYTES = 1_048_576
+MAX_ACCESS_REVIEW_REQUESTS = 1_000
+
 
 class AccessTier(StrEnum):
     PRIVILEGED = "privileged"
@@ -30,7 +33,10 @@ class AccessReviewRequest(StrictModel):
 
 
 class AccessReviewRequests(RootModel[list[AccessReviewRequest]]):
-    pass
+    root: list[AccessReviewRequest] = Field(
+        min_length=1,
+        max_length=MAX_ACCESS_REVIEW_REQUESTS,
+    )
 
 
 class DecisionRecord(StrictModel):
@@ -68,12 +74,8 @@ def run_access_review(
 
     decisions = [_decide(request, as_of=as_of) for request in requests]
     audit_events = _audit(decisions)
-    plan_material = f"{as_of.isoformat()}|{''.join(
-        event.event_hash for event in audit_events
-    )}"
-    plan_digest = hashlib.sha256(plan_material.encode()).hexdigest()
     return AccessReviewPlan(
-        plan_id=f"ARP-{plan_digest[:12]}",
+        plan_id=_plan_id(as_of=as_of, audit_events=audit_events),
         as_of=as_of,
         decisions=decisions,
         audit_events=audit_events,
@@ -81,10 +83,22 @@ def run_access_review(
 
 
 def run_access_review_file(path: Path, *, as_of: date) -> AccessReviewPlan:
+    if path.stat().st_size > MAX_ACCESS_REVIEW_FILE_BYTES:
+        raise ValueError("access review input exceeds the 1 MiB limit")
     requests = AccessReviewRequests.model_validate_json(
         path.read_text(encoding="utf-8")
     )
     return run_access_review(requests.root, as_of=as_of)
+
+
+def verify_access_review_plan(plan: AccessReviewPlan) -> bool:
+    expected_events = _audit(plan.decisions)
+    return (
+        not plan.side_effects_executed
+        and plan.audit_events == expected_events
+        and plan.plan_id
+        == _plan_id(as_of=plan.as_of, audit_events=expected_events)
+    )
 
 
 def _decide(request: AccessReviewRequest, *, as_of: date) -> DecisionRecord:
@@ -145,3 +159,11 @@ def _audit(decisions: list[DecisionRecord]) -> list[AuditEvent]:
         )
         previous_hash = event_hash
     return events
+
+
+def _plan_id(*, as_of: date, audit_events: list[AuditEvent]) -> str:
+    plan_material = f"{as_of.isoformat()}|{''.join(
+        event.event_hash for event in audit_events
+    )}"
+    plan_digest = hashlib.sha256(plan_material.encode()).hexdigest()
+    return f"ARP-{plan_digest[:12]}"

@@ -2,13 +2,18 @@ from datetime import date
 from pathlib import Path
 
 import pytest
+from pydantic import ValidationError
 
 from automation_coe_toolkit.example_automation import (
+    MAX_ACCESS_REVIEW_FILE_BYTES,
+    MAX_ACCESS_REVIEW_REQUESTS,
     AccessDecision,
     AccessReviewRequest,
+    AccessReviewRequests,
     AccessTier,
     run_access_review,
     run_access_review_file,
+    verify_access_review_plan,
 )
 
 
@@ -31,6 +36,7 @@ def test_reference_automation_builds_side_effect_free_auditable_plan() -> None:
         for index, event in enumerate(plan.audit_events[1:], start=1)
     )
     assert plan.plan_id == "ARP-8e3d00a2dd4d"
+    assert verify_access_review_plan(plan)
 
 
 def test_reference_automation_is_deterministic() -> None:
@@ -57,6 +63,34 @@ def test_duplicate_request_ids_are_rejected() -> None:
 
     with pytest.raises(ValueError, match="request IDs must be unique"):
         run_access_review([request, request], as_of=date(2026, 9, 1))
+
+
+def test_access_review_batch_size_is_bounded() -> None:
+    requests = [
+        _request().model_copy(update={"request_id": f"ARQ-{index + 1000}"})
+        for index in range(MAX_ACCESS_REVIEW_REQUESTS + 1)
+    ]
+
+    with pytest.raises(ValidationError, match="List should have at most"):
+        AccessReviewRequests.model_validate(requests)
+
+
+def test_access_review_file_size_is_bounded(tmp_path: Path) -> None:
+    oversized = tmp_path / "oversized.json"
+    oversized.write_bytes(b" " * (MAX_ACCESS_REVIEW_FILE_BYTES + 1))
+
+    with pytest.raises(ValueError, match="exceeds the 1 MiB limit"):
+        run_access_review_file(oversized, as_of=date(2026, 9, 1))
+
+
+def test_tampered_plan_fails_verification() -> None:
+    plan = run_access_review([_request()], as_of=date(2026, 9, 1))
+    changed_decision = plan.decisions[0].model_copy(
+        update={"reason_code": "unreviewed_override"}
+    )
+    tampered = plan.model_copy(update={"decisions": [changed_decision]})
+
+    assert not verify_access_review_plan(tampered)
 
 
 @pytest.mark.parametrize(

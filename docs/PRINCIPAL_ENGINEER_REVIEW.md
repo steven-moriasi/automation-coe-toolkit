@@ -16,7 +16,8 @@ that the model has run an enterprise portfolio or delivered claimed commercial o
 - Governance recommendations change with data, privilege, regulation, judgment, customer impact,
   and integration complexity.
 - The reference automation exposes a safe planning boundary, human-review cases, duplicate
-  rejection, deterministic output, and audit integrity chaining.
+  rejection, bounded inputs, deterministic output, and locally verifiable audit integrity
+  chaining.
 - Architecture, release, observability, incident, environment, and documentation standards form a
   coherent lifecycle rather than an isolated scoring spreadsheet.
 - Tests exercise ordinary, boundary, adverse, CLI, and integration behavior.
@@ -31,8 +32,8 @@ that the model has run an enterprise portfolio or delivered claimed commercial o
    approvals, model versions, exceptions, delivery status, and realized benefits are not stored.
 4. **Approval is documented, not enforced.** There is no policy engine or authenticated workflow
    preventing release when gates fail.
-5. **Audit integrity is local.** Hash chaining detects mutation within an exported plan but lacks
-   signing, trusted timestamps, access control, and append-only remote storage.
+5. **Audit integrity is local.** The verifier detects mutation within an exported plan, but the
+   chain lacks signing, trusted timestamps, access control, and append-only remote storage.
 6. **The reference automation performs no connector work.** Authorization, provider contracts,
    durable idempotency, retries, rate limits, reconciliation, and rollback are design requirements,
    not implemented production behavior.

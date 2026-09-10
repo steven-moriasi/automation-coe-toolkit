@@ -17,7 +17,7 @@
 | Monitoring | Outcome, latency, backlog, dependency, audit, and reconciliation standards |
 | Incident management | Containment, evidence preservation, continuity, recovery, and learning |
 | Documentation system | Intake, assessment, design, risk, runbook, and postmortem templates |
-| Working automation | Deterministic access-review plan with manual gates and hash-chained audit |
+| Working automation | Bounded deterministic access-review plan with verifiable hash-chained audit |
 | Engineering quality | Typed code, linting, strict mypy, tests, coverage, dependency audit, Docker, CI |
 
 ## What the implementation demonstrates

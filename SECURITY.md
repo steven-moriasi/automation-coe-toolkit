@@ -14,7 +14,7 @@ The latest `main` revision is the only supported portfolio version.
 This toolkit is not a production portfolio system or identity connector. Before organizational
 deployment, add authenticated authorization, durable storage, model versioning, approval evidence,
 tamper-resistant audit retention, data-loss prevention, workload identity, secret rotation, input
-size controls, monitoring, backup, and tested recovery.
+validation at every external transport boundary, monitoring, backup, and tested recovery.
 
 The reference access review generates a plan only. Do not connect it to an identity provider
 without independent security, privacy, architecture, and operational review.
