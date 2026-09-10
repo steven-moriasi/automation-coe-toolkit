@@ -23,6 +23,17 @@ class AssessmentDecision(StrEnum):
     RISK_REVIEW = "risk_review"
 
 
+class GateStatus(StrEnum):
+    CONDITIONAL = "conditional"
+    FAIL = "fail"
+    PASSED = "passed"
+
+
+class ControlPriority(StrEnum):
+    RECOMMENDED = "recommended"
+    REQUIRED = "required"
+
+
 class ProcessMetrics(StrictModel):
     monthly_volume: int = Field(ge=1, le=10_000_000)
     average_handling_minutes: Decimal = Field(gt=0, le=1_440)
@@ -101,3 +112,27 @@ class AssessmentResult(StrictModel):
     components: list[ScoreComponent]
     evidence_gaps: list[str]
     roi: RoiEstimate
+
+
+class GovernanceGate(StrictModel):
+    name: str
+    status: GateStatus
+    rationale: str
+
+
+class ControlRecommendation(StrictModel):
+    category: str
+    priority: ControlPriority
+    control: str
+    rationale: str
+
+
+class GovernanceReview(StrictModel):
+    gates: list[GovernanceGate]
+    controls: list[ControlRecommendation]
+
+
+class PortfolioEvaluation(StrictModel):
+    intake: AutomationIntake
+    assessment: AssessmentResult
+    governance: GovernanceReview
