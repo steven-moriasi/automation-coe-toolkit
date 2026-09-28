@@ -6,7 +6,7 @@ Accepted.
 
 ## Context
 
-A public portfolio example cannot safely assume access to a real identity provider or demonstrate
+A public reference implementation cannot safely assume access to a real identity provider or demonstrate
 privileged production changes.
 
 ## Decision

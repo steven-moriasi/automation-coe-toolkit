@@ -7,7 +7,7 @@ credentials, private process data, personal data, or exploitable details in a pu
 
 ## Supported version
 
-The latest `main` revision is the only supported portfolio version.
+The latest `main` revision is the only supported version.
 
 ## Deployment warning
 

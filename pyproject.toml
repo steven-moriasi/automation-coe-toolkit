@@ -9,7 +9,7 @@ description = "Executable governance toolkit for enterprise automation portfolio
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.11,<3.15"
-authors = [{ name = "Steven Ongati", email = "ongatisteven@gmail.com" }]
+authors = [{ name = "Steven Moriasi", email = "moriasisteven@gmail.com" }]
 dependencies = [
   "pydantic==2.13.5",
 ]

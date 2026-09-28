@@ -1,6 +1,6 @@
 # Automation CoE Toolkit
 
-A portfolio/reference implementation for governing an enterprise automation portfolio from intake
+A reference implementation for governing an enterprise automation portfolio from intake
 through assessment, delivery, release, and operations.
 
 The toolkit combines executable assessment logic with reusable governance standards. It makes
@@ -84,7 +84,7 @@ src/automation_coe_toolkit/  Executable assessment and reference automation
 examples/                    Fictional, non-production inputs
 templates/                   Intake, design, risk, runbook, and incident templates
 standards/                   Architecture, release, monitoring, and operating standards
-docs/                        Methods, threat model, evidence, ADRs, and critical review
+docs/                        Methods, threat model, roadmap, and ADR documentation
 tests/                       Unit, integration, and CLI tests
 ```
 
@@ -109,5 +109,3 @@ governance patterns. It does not claim:
 - that sample financial values or scores represent actual business results;
 - regulatory certification or replacement of legal, privacy, security, finance, or architecture
   approval.
-
-See [Portfolio Evidence](docs/PORTFOLIO_EVIDENCE.md) for the exact evidence boundary.
